@@ -1,0 +1,19 @@
+/*
+  Login Logout with Page Object Model
+*/
+
+describe('Login Logout using Page Objects', function() {
+  const homepage = browser.page.bpbpractice.homepage(); // home page object
+  before(async () => homepage.navigate());
+  it('Login Logout BPB Application', function(browser) {
+    homepage.click('@myAccountLink')
+    const loginpage = browser.page.bpbpractice.loginpage(); // login page object
+    loginpage.assert.elementPresent("@username_txtbox") //asserting element presence
+    loginpage.login("bpb@bpb.com","bpb@123")
+    //logout page object
+    const logoutpage = browser.page.bpbpractice.logoutpage(); // logout page object
+    logoutpage.assert.elementPresent("@logoutLink") //asserting element presence
+    logoutpage.logout()
+  });
+  after(async (browser) => browser.quit());
+});

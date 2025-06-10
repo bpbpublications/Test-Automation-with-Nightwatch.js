@@ -1,0 +1,19 @@
+describe('Working with iFrames', function () {
+   before(browser => browser.navigateTo('https://the-internet.herokuapp.com/iframe'));
+ 
+   it('Working with iFrames', function (browser) {
+     browser
+       .useXpath() // Setting locator to be used as xpath for following commands
+       .frame(0) // Switch to the first iframe on the page
+       .waitForElementPresent("//*[@id='tinymce']", 30000) // Wait for the text area inside the iframe
+       .getText("//*[@id='tinymce']", function (result) {
+         console.log("Text inside iframe: " + result.value); // Log the text content
+         this.assert.equal(result.value, "Your content goes here.", "Text content matches expected value."); // Assert the text content
+       })
+       .pause(3000)
+       .frame(null) // Switch back to the main page
+       .end(); // End the browser session
+   });
+ 
+   after(browser => browser.end());
+ });

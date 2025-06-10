@@ -1,0 +1,25 @@
+describe('Capture Page Performance Metrics', function () {
+  before(browser => {
+    browser.navigateTo('http://practice.bpbonline.com/');
+  });
+  it('Capture Page Performance Metrics', function (browser) {
+    browser
+      .useXpath() // Setting locator strategy to XPath for the following commands
+      .url('https://practice.bpbonline.com/index.php')
+      .execute(function () {
+        return JSON.stringify(window.performance.timing);
+      }, [], function (result) {
+        const performanceTiming = JSON.parse(result.value);
+        const pageLoadTime = performanceTiming.loadEventEnd - performanceTiming.navigationStart;
+        const domContentLoadedTime = performanceTiming.domContentLoadedEventEnd - performanceTiming.navigationStart;
+        const timeToFirstByte = performanceTiming.responseStart - performanceTiming.navigationStart;
+
+        console.log('Page Load Time:', pageLoadTime);
+        console.log('DOM Content Loaded Time:', domContentLoadedTime);
+        console.log('Time to First Byte (TTFB):', timeToFirstByte);
+      })
+  });
+  after(browser => {
+    browser.end();
+  });
+});

@@ -1,0 +1,37 @@
+describe('Register User BPB', function() {
+    before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+    it('Register User BPB', function(browser) {
+      let email="test"+Math.random()+"@test.com"
+       browser 
+        .useXpath() //setting locator to be used as xpath for following commands
+        .click('link text', 'My Account') //click on My Account link
+        .click("//a[@id='tdb4']")//click on Continue button
+         //add object presence assertion
+        .assert.elementPresent("//input[@name='firstname']")
+        .click("//input[@name='gender'][@value='f']")
+        .sendKeys("//input[@name='firstname']", "BPB")
+        .sendKeys("//input[@name='lastname']", "Online")
+        .sendKeys("//input[@name='dob']", "01/01/2000")
+        .sendKeys("//input[@name='email_address']",email)
+        .sendKeys("//input[@name='street_address']", "Hauz Khas")
+        .sendKeys("//input[@name='postcode']", "12345")
+        .sendKeys("//input[@name='city']", "New Delhi")
+        .sendKeys("//input[@name='state']", "New Delhi")
+        .setValue("//select[@name='country']","India")
+        .sendKeys("//input[@name='telephone']", "1234567890")
+        .sendKeys("//input[@name='password']", "test@123")
+        .sendKeys("//input[@name='confirmation']", "test@123")
+        //click to continue to register
+        .click("//a[@id='tdb5']")
+        //Click on Continue button for account
+        .click("//button[@id='tdb4']")//click on Continue button
+        //click to log off
+        .click('link text', 'Log Off')//click on Log Off link
+        .click('link text', 'Continue')// Click on Continue link
+        //add object absence assertion
+        .assert.not.elementPresent("//*[contains(text(),'Log Off')]")
+      });
+
+    after(browser => browser.end());
+  });
+  

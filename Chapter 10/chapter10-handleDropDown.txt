@@ -1,0 +1,23 @@
+describe('Traverse Country Dropdown', function () {
+  before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+  it('Traverse Country Dropdown in Register User Page', function (browser) {
+    browser
+      .useXpath() // Set locator strategy to XPath
+      .click('link text', 'My Account') //click on My Account link
+      .click("//a[@id='tdb4']")//click on Continue button
+      // Assert that the First Name input field is present
+      .assert.elementPresent("//input[@name='firstname']")
+      // Wait for the country dropdown to be visible
+      .waitForElementVisible("//select[@name='country']", 5000)
+      // Fetch all the options from the country dropdown using CSS selector
+      .elements('css selector', 'select[name="country"] option', function (result) {
+        result.value.forEach(function (element, index) {
+          browser.getText(element, function (text) {
+            console.log('Option ' + (index + 1) + ' : ' + text.value);
+          });
+        });
+      });
+    });
+
+  after(browser => browser.end());
+});

@@ -1,0 +1,63 @@
+/**
+ * A Nightwatch page object. The page object name is the filename.
+ *
+ * Usage:
+ *   browser.page.bpbpractice.loginpage()
+ * 
+ * For more information on working with page objects, see:
+ *   https://nightwatchjs.org/guide/concepts/page-object-model.html
+ *
+ */
+const loginAccount={
+  login(username,password) {
+    this.typeUsername(username), 
+    this.typePassword(password)
+    this.clickSignInBtn()
+  },
+    typeUsername(str) {
+      this.waitForElementVisible('@username_txtbox', 1000)
+      .sendKeys('@username_txtbox',str)
+      this.pause(1000);
+      return this; // for command-chaining
+    },
+    typePassword(str) {
+      this.waitForElementVisible('@password_txtbox', 1000)
+      .sendKeys('@password_txtbox',str)
+      this.pause(1000);
+      return this; // for command-chaining
+   },
+   clickSignInBtn() {
+    this.waitForElementVisible('@signin_btn', 1000)
+    .click('@signin_btn');
+    this.pause(1000);
+    return this; // for command-chaining
+  },
+
+};
+
+module.exports = {
+  url: 'https://practice.bpbonline.com/',
+
+  commands: [
+    loginAccount
+  ],
+
+  elements: {
+    username_txtbox: {
+      selector: '//input[@name="email_address"]',
+      locateStrategy: 'xpath',
+      index: 0
+    },
+    password_txtbox: {
+      selector: '//input[@name="password"]',
+      locateStrategy: 'xpath',
+      index: 0
+    },
+    signin_btn: {
+      selector: '//button[@id="tdb5"]',
+      locateStrategy: 'xpath',
+      index: 0
+    },
+    
+  }
+};

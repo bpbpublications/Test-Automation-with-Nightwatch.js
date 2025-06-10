@@ -1,0 +1,20 @@
+describe('waitForElementPresentFunctions Command', function() {
+  before(browser => browser.navigateTo('https://the-internet.herokuapp.com/forgot_password'));
+  it('waitForElementPresentFunctions', function(browser) {
+     browser 
+      // with xpath as the locate strategy
+      .useXpath() //setting locator to be used as xpath for following commands
+      .waitForElementPresent("//*[contains(text(), 'Retrieve password')]","Retrieve Password is Present") 
+      //wait for element to be present
+      .pause(2000) //command given to see execution, can be removed
+      .waitForElementNotPresent("//*[contains(text(), 'Retrieve password')]",1000,false,"Retrieve Password is not absent")
+      //wait for element to be not present
+      .click("//*[contains(text(), 'Retrieve password')]")
+      //deliberately clicking on the button to show, that execution is allowed as the flag set to false. 
+      .pause(2000) //command given to see execution, can be removed
+
+     
+      
+  });
+  after(browser => browser.end());
+});

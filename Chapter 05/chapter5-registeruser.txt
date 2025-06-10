@@ -1,0 +1,27 @@
+describe('Register User BPB', function() {
+  before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+  it('Register User BPB', function(browser) {
+     browser 
+      .useXpath() //setting locator to be used as xpath for following commands
+      .click('link text', 'My Account') //click on My Account link
+      .click('link text', 'Continue') //click on Continue link
+      .click("//input[@value='f']") //click female radio button
+      .setValue("//input[@name='firstname']", "joey")//set first name joey
+      .setValue("//input[@name='lastname']", "doey")//set last name doey
+      .setValue("//input[@name='dob']", "12/01/1980")//set date of birth
+      .setValue("//input[@name='email_address']", "joey5@doey.com")//set email, remember to change this for every execution
+      .setValue("//input[@name='street_address']", "london bridge")//set street address
+      .setValue("//input[@name='postcode']", "312431")//set post code
+      .setValue("//input[@name='city']", "london")//set city
+      .setValue("//input[@name='state']", "london")//set state
+      .setValue("//select[@name='country']", "United Kingdom")//set country
+      .setValue("//input[@name='telephone']", "831248103")//set telephone
+      .setValue("//input[@name='password']", "joeydoey")//set password
+      .setValue("//input[@name='confirmation']", "joeydoey")//set confirm password
+      .click("//button[@id='tdb4']")//click on Continue button
+      .click('link text', 'Continue')//click on Continue link
+      .click('link text', 'Log Off')// Click on Log Off link
+      .click('link text', 'Continue')//Click on Continue to log off
+    });
+  after(browser => browser.end());
+});

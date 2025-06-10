@@ -1,0 +1,12 @@
+describe('isVisible Command Execution Demo', function() {
+    before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+    it('isVisible Function', function(browser) {
+       browser 
+        .useXpath() //setting locator to be used as xpath for following commands
+        .click('link text', 'My Account') //click on My Account link
+        .isVisible("//button[@id='tdb5']",response => console.log(response))//check if Sign in button is visible
+        
+      });
+    after(browser => browser.end());
+  });
+  

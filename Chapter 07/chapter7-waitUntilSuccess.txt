@@ -1,0 +1,11 @@
+describe('waitUntil() Command', function() {
+  before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+  it('waitUntil() command', function(browser) {
+     browser 
+      // with xpath as the locate strategy
+     .element.find(by.linkText('My Account')).waitUntil('visible', {message: 'My Account link is found'})
+     .click('link text', 'My Account') //click on My Account link
+      
+    });
+  after(browser => browser.end());
+});

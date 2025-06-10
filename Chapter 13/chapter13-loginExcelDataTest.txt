@@ -1,0 +1,37 @@
+const { readDataFromExcel } = require('./dataReaderExcel.js');
+
+describe('Login Logout BPB', function() {
+  let credentials = [];
+
+  // Load Excel data before starting the test
+  before(function(browser, done) {
+    readDataFromExcel('D:\\WORK\\BPB PUBLICATIONS\\NIGHTWATCH\\BPBNightWatchProject\\data.xlsx','Users')
+      .then(data => {
+        credentials = data;
+        done();  // Tell Nightwatch we're done with async setup
+      })
+      .catch(err => {
+        done(err); // Pass any error to Nightwatch
+      });
+  });
+  
+  it('Login Logout with Data', function(browser) {
+    // For each row in the spreadsheet, do a login-logout cycle
+    credentials.forEach((row, index) => {
+      browser
+        .useXpath()
+        .navigateTo('http://practice.bpbonline.com/')
+        .click('link text', 'My Account')
+        .setValue("//input[@name='email_address']", row.email)
+        .setValue("//input[@name='password']", row.password)
+        .click("//button[@id='tdb5']")
+        .assert.elementPresent("//*[contains(text(),'Log Off')]")
+        .click('link text', 'Log Off')
+        .click('link text', 'Continue')
+        .assert.not.elementPresent("//*[contains(text(),'Log Off')]");
+    });
+  });
+
+  // Close the browser after the tests finish
+  after(browser => browser.end());
+});

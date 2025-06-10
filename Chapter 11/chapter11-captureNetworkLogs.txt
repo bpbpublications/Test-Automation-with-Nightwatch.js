@@ -1,0 +1,22 @@
+describe('Capture Network Logs', function () {
+  before(browser => {
+    browser.navigateTo('http://practice.bpbonline.com/');
+  });
+  it('Capture Network Logs', function (browser) {
+    browser
+      .useXpath() // Setting locator strategy to XPath for the following commands
+      .url('https://practice.bpbonline.com/index.php') // Navigate to the specific page
+      .click("//select[@name='manufacturers_id']") // Click on the dropdown
+      .click("//option[@value='4']") // Select the option with value "Fox"
+      .waitForElementVisible("//a[contains(text(),'Courage Under Fire')]", 5000) // Wait for the link to be visible
+      .click("//a[contains(text(),'Courage Under Fire')]") // Click on the link for the specific product
+      .getLog('browser', function (logs) {
+        logs.forEach(function (log) {
+          console.log(log.message);
+        });
+      });
+  });
+  after(browser => {
+    browser.end();
+  });
+});

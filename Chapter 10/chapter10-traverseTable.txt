@@ -1,0 +1,34 @@
+describe('Traverse Product Table', function () {
+  before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+
+  it('Traverse Product Table', function (browser) {
+    browser
+      .useXpath() // Setting locator to be used as xpath for following commands
+      .assert.elementPresent("//*[contains(text(),'My Account')]")
+      .elements("css selector", "tr", function (fetchRows) {
+        // fetchRows.value is an array of element objects
+        const numberOfRows = fetchRows.value.length;
+        console.log("Table rows: " + numberOfRows);
+
+        // Fetch table columns after getting rows
+        browser.elements("css selector", "tr:nth-child(1) td", function (fetchCols) {
+          const numberOfCols = fetchCols.value.length;
+          console.log("Table columns: " + numberOfCols);
+
+          // Traverse table cells
+          for (let i = 1; i <= numberOfRows; i++) {
+            for (let j = 1; j <= numberOfCols; j++) {
+              // Using XPath with correct format in getText
+              browser.getText(`//table/tbody/tr[${i}]/td[${j}]`, function (result) {
+                console.log(`Row: ${i}, Column: ${j}, Value: ${result.value}`);
+              });
+            }
+            break; // To print only first row
+          }
+        });
+      });
+  });
+
+  after(browser => browser.end());
+});
+

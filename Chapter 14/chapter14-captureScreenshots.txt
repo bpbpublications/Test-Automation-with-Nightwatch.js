@@ -1,0 +1,70 @@
+/*
+  Login Logout with Page Object Model, Data From CSV and Logging
+*/
+
+const winston = require("winston");
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'loginlogouttest.log' })
+  ]
+});
+
+const { readDataFromCSV } = require('./dataReader.js');
+
+describe('Login Logout BPB', function() {
+  let credentials = [];
+
+  // Load CSV data before starting the test
+  before(function(browser, done) {
+    readDataFromCSV('D:\\WORK\\BPB PUBLICATIONS\\NIGHTWATCH\\BPBNightWatchProject\\nightwatch\\examples\\codeexamplesbook\\data.csv')  // <-- Make sure your CSV file name/path is correct
+      .then(data => {
+        credentials = data;
+        done();  // Tell Nightwatch we're done with async setup
+      })
+      .catch(err => {
+        done(err); // Pass any error to Nightwatch
+      });
+  });
+
+  it('Login Logout with Data', function(browser) {
+    logger.info("Starting Loging Logout.. ");
+    credentials.forEach((row, index) => {
+      browser
+        .useXpath()
+        const homepage = browser.page.bpbpractice.homepage(); // home page object
+        homepage.navigate();
+        homepage.click('@myAccountLink');
+        browser.saveScreenshot("screenshots/myaccountpage.png") 
+        const loginpage = browser.page.bpbpractice.loginpage(); // login page object
+        loginpage.assert.elementPresent("@username_txtbox"); //asserting element presence
+        logger.info("verifying we are on login page..");
+        loginpage.login(row.email,row.password);
+        const screenshotname="screenshots/loginpage" +row.email + ".png"
+        browser.saveScreenshot(screenshotname) 
+        //logout page object
+        const logoutpage = browser.page.bpbpractice.logoutpage(); // logout page object
+        logoutpage.logout();
+        browser.saveScreenshot("screenshots/logout.png") 
+        logger.info("Test complete for user details, username: " + row.email + " and password: " + row.password);
+       });
+  });
+
+  // After hook to capture errors and close the browser
+  after(function(browser, done) {
+    // Access the test results
+    const results = browser.currentTest.results;
+
+    // Check for failed assertions or errors
+    if (results.failed > 0 || results.errors > 0) {
+      logger.error('Test had a failing assertion or an error.');
+    }
+     // Close the browser
+    browser.end(() => {
+      if (typeof done === 'function') {
+        done();
+      }
+    });
+  });
+});

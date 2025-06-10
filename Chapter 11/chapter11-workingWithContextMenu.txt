@@ -1,0 +1,17 @@
+describe('Automate Context Menu', function() {
+  before(browser => browser.navigateTo('https://the-internet.herokuapp.com/context_menu'));
+  it('Automate Context Menu', function(browser) {
+    browser
+    .useXpath() // Setting locator strategy to XPath for the following commands
+    .rightClick("//div[@id='hot-spot']") // Right click on the context menu
+    .pause(2000) // Pause for 2 seconds
+    .alerts.accept() // Accept the alert
+    .pause(500)
+     // Press the Escape key to close the modal or perform other actions
+     .perform(() => {
+      browser.sendKeys(browser.Keys.ESCAPE); // Simulates pressing the Escape key
+      browser.pause(500);
+    })
+});
+ after(browser => browser.end());
+});

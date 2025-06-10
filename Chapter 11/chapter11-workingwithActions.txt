@@ -1,0 +1,16 @@
+describe('Working with Actions', function() {
+  before(browser => {
+    browser.navigateTo('https://the-internet.herokuapp.com/hovers');
+  });
+
+  it('Working with Actions', function(browser) {
+    browser
+      .useXpath() // Set locator strategy to XPath for subsequent commands
+      .click("//*[@id='content']/div/div[2]/img") // Hover over the second image at (0,0)
+      .pause(2000) // Pause for 2 seconds to allow the hover effect to be visible
+      .click('link text', 'View profile')// Click on Continue link
+      .pause(2000); // Pause for 2 seconds to observe the result
+  });
+
+  after(browser => browser.end());
+});

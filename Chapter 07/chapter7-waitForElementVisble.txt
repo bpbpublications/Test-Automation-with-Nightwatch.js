@@ -1,0 +1,16 @@
+describe('waitForElementVisibleFunctions Command', function() {
+  before(browser => browser.navigateTo('https://the-internet.herokuapp.com/add_remove_elements/'));
+  it('waitForElementVisibleFunctions', function(browser) {
+     browser 
+      // with xpath as the locate strategy
+      .useXpath() //setting locator to be used as xpath for following commands
+      .pause(2000) //command given to see execution
+      .click("//*[contains(text(), 'Add Element')]") //click on Add Element
+      .waitForElementVisible("//*[contains(text(), 'Delete')]") //wait for Delete button to become visible
+      .click("//*[contains(text(), 'Delete')]") //click on Delete Element
+      .pause(2000) //command given to see execution, can be removed
+      .waitForElementNotVisible("//*[contains(text(), 'Delete')]",10000,"This element is deleted")
+      //Wait for Delete Button to be not be not visible, with a timeout of 10 seconds
+  });
+  after(browser => browser.end());
+});

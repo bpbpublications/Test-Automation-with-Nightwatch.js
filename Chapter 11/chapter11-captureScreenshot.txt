@@ -1,0 +1,13 @@
+describe('Capture Screenshot', function() {
+  before(browser => browser.navigateTo('https://the-internet.herokuapp.com/login'));
+  it('Capture Screenshot', function(browser) {
+    browser
+    .useXpath() // Setting locator strategy to XPath for the following commands
+    .sendKeys("//input[@name='username']", 'tomsmith') // Enter the username
+    .sendKeys("//input[@name='password']", 'wrongpwd') // Enter the password
+    .click("//button[@type='submit']") // Click on the login button
+    .saveScreenshot('screenshots/badcredential-login.png') // Save the screenshot
+    });
+
+  after(browser => browser.end());
+});

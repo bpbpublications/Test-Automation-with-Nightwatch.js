@@ -1,0 +1,37 @@
+describe('Handle Alerts', function() {
+    before(browser => browser.navigateTo('https://the-internet.herokuapp.com/javascript_alerts'));
+    it('Handle Alerts', function(browser) {
+       browser 
+        .useXpath() //setting locator to be used as xpath for following commands
+        //Example of Alert Javascript Popup
+        .click("//button[contains(text(),'Click for JS Alert')]")
+        .pause(1000)
+        .alerts.accept() // Accept the alert
+        .pause(1000)
+        .getText("//*[@id='result']", function (result) {
+          console.log("Text after alert: " + result.value); // Log the text content
+          browser.assert.equal(result.value, "You successfully clicked an alert", "Text content matches expected value."); // Assert the text content
+        })
+        //Example of Confirm Javascript Popup
+        .click("//button[contains(text(),'Click for JS Confirm')]")
+        .pause(1000)
+        .alerts.dismiss() 
+        .pause(1000)
+        .getText("//*[@id='result']", function (result) {
+          console.log("Text after alert: " + result.value); // Log the text content
+          browser.assert.equal(result.value, "You clicked: Cancel", "Text content matches expected value."); // Assert the text content
+        })
+        //Example of Prompt Javascript Popup
+        .click("//button[contains(text(),'Click for JS Prompt')]")
+        .pause(1000)
+        .alerts.setText('hello world') // Set text for the JS prompt
+        .alerts.accept() // Accept the alert to submit the text
+        .pause(1000)
+        .getText("//*[@id='result']", function (result) {
+          console.log("Text after alert: " + result.value); // Log the text content
+          browser.assert.equal(result.value, "You entered: hello world", "Text content matches expected value."); // Assert the text content
+        })
+    });
+   after(browser => browser.end());
+});
+  

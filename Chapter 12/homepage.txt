@@ -1,0 +1,36 @@
+/**
+ * A Nightwatch page object. The page object name is the filename.
+ *
+ * Usage:
+ *   browser.page.bpbpractice.homepage()
+ * 
+ * For more information on working with page objects, see:
+ *   https://nightwatchjs.org/guide/concepts/page-object-model.html
+ *
+ */
+
+const homepage={
+  clickMyAccount() {
+      this.waitForElementVisible('@myAccountLink', 1000)
+      .click('@myAccountLink');
+      this.pause(1000);
+      return this; // for command-chaining
+  },
+};
+
+module.exports = {
+  url: 'https://practice.bpbonline.com/',
+
+  commands: [
+    homepage
+  ],
+
+  elements: {
+    myAccountLink: {
+      selector: '//a[@id="tdb3"]',
+      locateStrategy: 'xpath',
+      index: 0
+    },
+    
+  }
+};

@@ -1,0 +1,11 @@
+it("Console Logs Example", function(browser) {
+    console.log("Starting the sample test...");
+  
+    browser
+      .navigateTo("https://nightwatchjs.org/")
+      .perform(() => console.log("Navigated to example.com"))
+      .assert.titleContains("Nightwatch");
+  
+    console.log("Sample test completed.");
+  });
+  

@@ -1,0 +1,13 @@
+describe('Command Queue Demo', function() {
+    before(browser => browser.navigateTo('http://practice.bpbonline.com/'));
+        it('Nightwatch Command Execution Flow', function(browser) {
+       browser 
+        .useXpath() //setting locator to be used as xpath for following commands
+        .setValue("//input[@name='keywords']", "Nightwatch")
+        .getValue("//input[@name='keywords']", ({ value }) => console.log("call back command: "+value))
+        .clearValue("//input[@name='keywords']") // clears input field
+       console.log('direct javascript command');
+       });
+    after(browser => browser.end());
+  });
+  

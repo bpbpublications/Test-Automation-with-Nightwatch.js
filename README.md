@@ -1,2 +1,2 @@
-# Nightwatch.js The Complete Beginners Handbook to Modern Test Automation
-Nightwatch.js: The Complete Beginner's Handbook to Modern Test Automation, by BPB Publications
+# Test Automation with Nightwatch.js
+Test Automation with Nightwatch.js, by BPB Publications
